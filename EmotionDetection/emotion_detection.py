@@ -10,6 +10,7 @@ def emotion_detector(text_to_analyse):
 
     if response.status_code == 200:
         response_json = json.loads(response.text)
+        emotion_dict = response_json['emotionPredictions'][0]['emotion']
 
         # defaulting to score of 0 if not in the output but still a 200
         anger_score = emotion_dict.get('anger', 0)
@@ -18,7 +19,6 @@ def emotion_detector(text_to_analyse):
         joy_score = emotion_dict.get('joy', 0)
         sadness_score = emotion_dict.get('sadness', 0)
 
-        emotion_dict = response_json['emotionPredictions'][0]['emotion']
         dominant_emotion = max(emotion_dict, key=emotion_dict.get)
 
     elif response.status_code == 400:
